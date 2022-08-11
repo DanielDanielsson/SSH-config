@@ -5,13 +5,15 @@ I want to use both accounts on same computer (without typing password everytime,
 ## Solution :white_check_mark:
 Use ssh keys and define host aliases in ssh config file (each alias for an account). AND use diffrent .gitconfig user credentials depending on what directory you're currently working in. 
 
-## How? :zap:
+## How? 🌟 
 
-1. Change directory to root ~
+
+### 1. Change directory to root ~
 
 Make sure your current directory is root. In root you should already have a .ssh folder by default. Since it's a dot folder you need to do ```ls -a``` in order to see it. If you don't have any, you can create one with ```mkdir .ssh```.
 
-2. Change directory to .ssh and run the following commands: 
+
+### 2. Change directory to .ssh and run these commands: 
 
 ```
 $ ssh-keygen -t rsa -b 8192 -C "user1@email.com" -f "github-user1"
@@ -23,7 +25,8 @@ $ ssh-keygen -t rsa -b 8192 -C "user2@email.com" -f "github-user2"
 
 Now you should have public and private keys for both your accounts in your ```~/.ssh/``` directory.
 
-3. Add the SSH keys to your SSH-agent by running the following commands: 
+
+### 3. Add the SSH keys to your SSH-agent
 
 ```
 $ ssh-add --apple-use-keychain ~/.ssh/github-user1
@@ -32,7 +35,10 @@ $ ssh-add --apple-use-keychain ~/.ssh/github-user2
 
 To see all entries added, use ```ssh-add -l```
 
-4. Add config file to the ```~/.ssh/``` directory if you dont already have one. This can be done by running ```touch config```. Add these lines to your config file: 
+
+### 4. Add a config file to the ```~/.ssh/``` directory.
+
+If you dont have one, run ```touch config```. Add these lines to your config file: 
 
 ```
 Host github.com-user1
@@ -48,7 +54,8 @@ UseKeychain yes
 IdentityFile ~/.ssh/github-user2
 ```
 
-5. Import all the public keys on the corresponding GitHub accounts
+
+### 5. Import all the public keys on the corresponding GitHub accounts.
 
 Sign in to corresponding github account and add the public ssh key in Settings -> SSH and GPL Keys. Copy the correct keys by running 
 
@@ -57,12 +64,22 @@ $ pbcopy < ~/.ssh/github-user1.pub
 $ pbcopy < ~/.ssh/github-user2.pub
 ```
 
-6. Now we're ready to test out connections by running ```ssh -T git@github.com-user1``` and we should get a response similar to this: 
+
+### 6. Now we're ready to test out connections by running 
+```
+ssh -T git@github.com-user1
+``` 
+```
+ssh -T git@github.com-user2
+```
+
+We should get a response similar to this: 
 ```
 Hi user1! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-7. Change .gitconfig according to current directory.
+
+### 7. Change .gitconfig according to current directory.
 
 if you want to be sure before committing, you can check current gitconfig by running ```git config --list```
 
